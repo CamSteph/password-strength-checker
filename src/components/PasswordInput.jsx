@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const PasswordInputWrapper = styled.section`
@@ -6,13 +6,20 @@ const PasswordInputWrapper = styled.section`
   min-height: 2rem;
   background-color: var(--highlight-color-primary);
   border-radius: var(--rounded-border);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   display: grid;
   place-items: center;
 
   .input-wrapper {
     display: grid;
-    grid-template-columns: 20rem auto;
+    grid-template-columns: 20rem 4rem auto;
     grid-column-gap: 1rem;
+
+    .toggle-visibility-wrapper {
+      display: flex;
+      align-items: center;
+    }
 
     .password-input {
       width: 100%;
@@ -22,7 +29,11 @@ const PasswordInputWrapper = styled.section`
       outline: none;
       border: none;
       font-size: 1.7rem;
+      text-align: center;
 
+      ::-ms-clear, ::-ms-reveal {
+        display: none;
+      }
     }
 
     .clear-btn {
@@ -47,17 +58,30 @@ const PasswordInput = ({
     setPassword(updatedValue);
   };
 
+  const [isShowingPassword, setIsShowingPassword] = useState(false);
+
   return (
     <PasswordInputWrapper>
       <div className="input-wrapper">
         <input 
           className="password-input" 
-          type="text" 
+          type={isShowingPassword ? "text" : "password"} 
           autoFocus
           placeholder="Enter password here"
           onChange={(e) => handlePasswordChange(e)}
+          value={password}
         />
-        {password.length ? (<button className="clear-btn">CLEAR</button>) : (null)}
+        <div className="toggle-visibility-wrapper">
+          <label for="toggle-visibility">Show:</label>
+          <input 
+            name="toggle-visibility" 
+            type="checkbox" 
+            className="toggle-visibility" 
+            onClick={() => setIsShowingPassword(!isShowingPassword)}
+            checked={isShowingPassword}
+          />
+        </div>
+        {password.length ? (<button className="clear-btn" onClick={() => setPassword('')}>CLEAR</button>) : (null)}
       </div>
     </PasswordInputWrapper>
   );

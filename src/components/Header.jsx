@@ -8,7 +8,7 @@ const HeaderWrapper = styled.header`
   padding: .8rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  background-color: var(--black-color-primary);
+  background-color: var(--black-color-secondary);
 
   .logo {
     font-size: 1.5rem;
@@ -45,7 +45,7 @@ const HeaderWrapper = styled.header`
 const Header = () => {
   return (
     <HeaderWrapper>
-      <h1 className="logo">Password Strength Checker</h1>
+      <h1 className="logo">Secure Password</h1>
       <nav className="header-nav">
         <ul className="nav-ul">
           <li><Link to="/">Home</Link></li>

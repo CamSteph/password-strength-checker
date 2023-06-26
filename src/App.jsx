@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 const GlobalStyles = createGlobalStyle`
   :root {
     --black-color-primary: #181818;
+    --black-color-secondary: #070707;
     --white-color-primary: #fff;
     --offwhite-color: #ccc;
     --highlight-color-primary: #008cff;

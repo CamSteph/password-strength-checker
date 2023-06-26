@@ -2,19 +2,22 @@ import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import PasswordInput from '../components/PasswordInput';
 import ResultDisplay from '../components/ResultDisplay';
+import Tips from '../components/Tips';
 
 const HomepageWrapper = styled.main`
   width: 100%;
-  height: 90vh;
+  min-height: 100vh;
   padding: 2rem 4rem;
   background: var(--offwhite-color);
+  background: var(--black-color-primary);
   display: grid;
-  grid-template-rows: 3rem 5rem 1fr;
-  grid-row-gap: 1rem;
+  grid-template-rows: repeat(4, 5rem);
 
   .main-title {
     text-align: center;
     font-size: calc(16px * var(--font-scale) * var(--font-scale));
+    color: var(--white-color-primary);
+    margin-bottom: 130px !important;
     
     .keyword {
       font-size: calc(16px * var(--font-scale) * var(--font-scale));
@@ -37,6 +40,7 @@ const Homepage = () => {
       <ResultDisplay 
         password={password}
       />
+      <Tips />
     </HomepageWrapper>
   );
 };
