@@ -4,6 +4,7 @@ import Homepage from "./pages/Homepage";
 import NotFound from "./pages/NotFound";
 import { createGlobalStyle } from "styled-components";
 import Footer from "./components/Footer";
+import Contributions from "./pages/Contributions";
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -27,6 +28,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
+        <Route path="/contributions" element={<Contributions />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />

@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import PasswordInput from '../components/PasswordInput';
 import ResultDisplay from '../components/ResultDisplay';
 import Tips from '../components/Tips';
+import PasswordChecklist from '../components/PasswordChecklist';
 
 const HomepageWrapper = styled.main`
   width: 100%;
@@ -11,7 +12,7 @@ const HomepageWrapper = styled.main`
   background: var(--offwhite-color);
   background: var(--black-color-primary);
   display: grid;
-  grid-template-rows: repeat(4, 5rem);
+  grid-template-rows: 5rem 5rem 5rem 2rem;
 
   .main-title {
     text-align: center;
@@ -40,6 +41,7 @@ const Homepage = () => {
       <ResultDisplay 
         password={password}
       />
+      <PasswordChecklist passwordlength={password.length}/>
       <Tips />
     </HomepageWrapper>
   );

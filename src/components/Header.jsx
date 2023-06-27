@@ -45,7 +45,7 @@ const HeaderWrapper = styled.header`
 const Header = () => {
   return (
     <HeaderWrapper>
-      <h1 className="logo">Secure Password</h1>
+      <h1 className="logo">Secure Password.</h1>
       <nav className="header-nav">
         <ul className="nav-ul">
           <li><Link to="/">Home</Link></li>
