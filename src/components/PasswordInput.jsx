@@ -19,6 +19,14 @@ const PasswordInputWrapper = styled.section`
     .toggle-visibility-wrapper {
       display: flex;
       align-items: center;
+
+      label {
+        color: var(--white-color-primary);
+      }
+
+      .toggle-visibility {
+        margin-left: 2px;
+      }
     }
 
     .password-input {
@@ -69,16 +77,16 @@ const PasswordInput = ({
           autoFocus
           placeholder="Enter password here"
           onChange={(e) => handlePasswordChange(e)}
-          value={password}
+          defaultValue={password}
         />
         <div className="toggle-visibility-wrapper">
-          <label for="toggle-visibility">Show:</label>
+          <label htmlFor="toggle-visibility">Show: </label>
           <input 
             name="toggle-visibility" 
             type="checkbox" 
             className="toggle-visibility" 
-            onClick={() => setIsShowingPassword(!isShowingPassword)}
-            checked={isShowingPassword}
+            onChange={() => setIsShowingPassword(!isShowingPassword)}
+            defaultChecked={isShowingPassword}
           />
         </div>
         {password.length ? (<button className="clear-btn" onClick={() => setPassword('')}>CLEAR</button>) : (null)}
