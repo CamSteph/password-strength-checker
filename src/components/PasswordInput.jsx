@@ -77,7 +77,7 @@ const PasswordInput = ({
           autoFocus
           placeholder="Enter password here"
           onChange={(e) => handlePasswordChange(e)}
-          defaultValue={password}
+          value={password}
         />
         <div className="toggle-visibility-wrapper">
           <label htmlFor="toggle-visibility">Show: </label>

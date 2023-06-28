@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { calculatePasswordStrength } from '../utilities';
 
@@ -30,28 +30,33 @@ const PasswordStatusMsg = styled.span`
   word-wrap: break-word;
 `;
 
-const DataTitle = styled.span`
-  font-size: calc(16px * var(--font-scale));
-  color: var(--white-color-primary);
-`;
-
 const ResultDisplay = ({
-  password
+  password,
+  setPasswordChecklist,
+  passwordStrength,
+  setPasswordStrength,
 }) => {
 
-  const generatePasswordStrengthMsg = (passwordValue) => {
-    switch (calculatePasswordStrength(passwordValue)) {
+  const generatePasswordStrengthMsg = () => {
+    switch (passwordStrength) {
       case 'very-weak': return 'Your password is very weak!';
       case 'weak': return 'Your password is weak.';
       case 'medium': return 'Your password is reasonable, but could be better.';
       case 'strong': return 'Your password is strong.';
       case 'very-strong': return 'Legendary password strength!';
-      default: return 'Try again later.';
-    }
-  }
+      default: return 'Something went wrong.';
+    };
+
+  };
+
+  useEffect(() => {
+    const { passwordStrengthKey, passwordChecklist } = calculatePasswordStrength(password);
+    setPasswordChecklist(passwordChecklist);
+    setPasswordStrength(passwordStrengthKey);
+  }, [password]);
 
   return (
-    <ResultDisplayWrapper passwordstatus={calculatePasswordStrength(password)}>
+    <ResultDisplayWrapper passwordstatus={passwordStrength}>
       {password.length === 0 ? 
         (<PasswordStatusMsg>No password entered</PasswordStatusMsg>) 
       : 

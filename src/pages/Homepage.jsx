@@ -30,6 +30,13 @@ const HomepageWrapper = styled.main`
 const Homepage = () => {
 
   const [password, setPassword] = useState('');
+  const [passwordChecklist, setPasswordChecklist] = useState({
+    lowerCase: false,
+    upperCase: false,
+    numbers: false,
+    specialChars: false,
+  });
+  const [passwordStrength, setPasswordStrength] = useState('empty');
 
   return (
     <HomepageWrapper>
@@ -40,8 +47,14 @@ const Homepage = () => {
       />
       <ResultDisplay 
         password={password}
+        setPasswordChecklist={setPasswordChecklist}
+        passwordStrength={passwordStrength}
+        setPasswordStrength={setPasswordStrength}
       />
-      <PasswordChecklist passwordlength={password.length}/>
+      <PasswordChecklist 
+        passwordlength={password.length} 
+        passwordChecklist={passwordChecklist} 
+      />
       <Tips />
     </HomepageWrapper>
   );

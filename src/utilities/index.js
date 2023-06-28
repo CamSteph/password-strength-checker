@@ -12,49 +12,82 @@ const checkForCommonWords = (password) => {
 };
 
 const calculatePoolUniqueness = (password) => {
-  let uniqueness = 1;
+  let uniqueness = 0;
+  let lowercase = false;
+  let uppercase = false;
+  let numbers = false;
+  let specialChars = false;
 
-  if (/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/g.test(password)) uniqueness += 62;
-  else if (/(?=.*[a-z])(?=.*[A-Z])/g.test(password)) uniqueness += 52;
-  else if (/(?=.*[a-z])(?=.*[0-9])/g.test(password)) uniqueness += 52;
-  else if (/(?=.*[a-z])/g.test(password)) uniqueness += 26;
-  else if (/(?=.*[A-Z])/g.test(password)) uniqueness += 26;
-  else if (/(?=.*[0-9])/g.test(password)) uniqueness += 10;
+  if (/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/g.test(password)) {
+    uniqueness += 62;
+    lowercase = true;
+    uppercase = true;
+    numbers = true;
+  }
+  else if (/(?=.*[a-z])(?=.*[A-Z])/g.test(password)) {
+    uniqueness += 52;
+    lowercase = true;
+    uppercase = true;
+  }
+  else if (/(?=.*[a-z])(?=.*[0-9])/g.test(password)) {
+    uniqueness += 52;
+    lowercase = true;
+    numbers = true;
+  }
+  else if (/(?=.*[a-z])/g.test(password)) {
+    uniqueness += 26;
+    lowercase = true;
+  }
+  else if (/(?=.*[A-Z])/g.test(password)) {
+    uniqueness += 26;
+    uppercase = true;
+  }
+  else if (/(?=.*[0-9])/g.test(password)) {
+    uniqueness += 10;
+    numbers = true;
+  }
+  if (/[^\w\s]/g.test(password)) {
+    uniqueness += 32;
+    specialChars = true;
+  }
 
-  if (/[`~!@#\$%\^&\*\(\)-=_\+\[{\]}\\)]+/g.test(password)) uniqueness += 32;
+  const passwordChecklist = {
+    lowerCase: lowercase,
+    upperCase: uppercase,
+    numbers,
+    specialChars,
+  };
 
   const uniqueCharsSize = new Set(password).size;
   const isWeakPassword = checkForCommonWords(password);
-
-  // console.log(uniqueCharsSize, isWeakPassword);
  
-  if (uniqueCharsSize <= 5 || isWeakPassword) uniqueness = 1;
-
+  if (uniqueCharsSize <= 5 || isWeakPassword || uniqueness < 1) uniqueness = 1;
   // if (!(password.length > uniqueCharsSize * 2)) uniqueness = 1;
-  const distinctValueDifference = password.length / uniqueCharsSize;
-  console.log(Math.log2(Math.pow(.200091, 25)));
+  // const distinctValueDifference = password.length / uniqueCharsSize;
+  // console.log(Math.log2(Math.pow(.200091, 25)));
 
-  return uniqueness;
+  return {uniqueness, passwordChecklist};
 };
 
 export const calculatePasswordStrength = (password = '') => {
-  if (password.length < 1) return 'empty';
+  if (password.length < 1) return {passwordStrengthKey: 'empty'};
 
   const passwordLength = password.length;
-  const passwordUniqueness = calculatePoolUniqueness(password);
-  const passwordStrength = Math.abs(Math.log2(Math.pow(passwordUniqueness, passwordLength))).toFixed(2);
-
-  console.log({passwordLength, passwordUniqueness, passwordStrength});
+  const {uniqueness: passwordUniqueness, passwordChecklist} = calculatePoolUniqueness(password);
+  let passwordStrengthKey;
+  const passwordStrength = Math.log2(Math.pow(passwordUniqueness, passwordLength)).toFixed(2);
 
   if (passwordStrength <= 10) {
-    return 'very-weak';
+    passwordStrengthKey = 'very-weak';
   } else if (passwordStrength > 10 && passwordStrength <= 20) {
-    return 'weak';
+    passwordStrengthKey = 'weak';
   } else if (passwordStrength > 20 && passwordStrength <= 50) {
-    return 'medium';
+    passwordStrengthKey = 'medium';
   } else if (passwordStrength > 50 && passwordStrength <= 70) {
-    return 'strong';
+    passwordStrengthKey = 'strong';
   } else {
-    return 'very-strong';
+    passwordStrengthKey = 'very-strong';
   }
+
+  return {passwordStrengthKey, passwordChecklist};
 };
